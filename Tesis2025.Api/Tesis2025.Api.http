@@ -1,0 +1,6 @@
+@Tesis2025.Api_HostAddress = http://localhost:5145
+
+GET {{Tesis2025.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
