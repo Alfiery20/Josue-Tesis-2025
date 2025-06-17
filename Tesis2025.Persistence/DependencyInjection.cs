@@ -19,6 +19,8 @@ namespace Tesis2025.Persistence
             services.AddTransient<IDataBase>(sp => new SqlDataBase(connectionString));
 
             services.AddSingleton<IAutenticacionRepository, AutenticacionRepository>();
+            services.AddSingleton<ICodigoRecuperacionRepository, CodigoRecuperacionRepository>();
+            services.AddSingleton<IMascotaRepository, MascotaRepository>();
 
             return services;
         }

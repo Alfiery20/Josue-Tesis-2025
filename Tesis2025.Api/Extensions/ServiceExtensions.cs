@@ -123,9 +123,7 @@ namespace Tesis2025.Api.Extensions
             services.AddControllers(options =>
             {
                 options.Filters.Add(new AuthorizeFilter(Constants.GlobalOAuthPolicyName));
-            })
-                .AddNewtonsoftJson();
-                //.AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<ICurrentUser>());
+            }).AddNewtonsoftJson();
             services.AddCors(options =>
             {
                 options.AddPolicy(Constants.CorsPolicyName,

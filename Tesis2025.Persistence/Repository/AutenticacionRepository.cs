@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Dapper;
 using Microsoft.Extensions.DependencyInjection;
+using Tesis2025.Application.Autenticacion.Command.ActualizarClave;
 using Tesis2025.Application.Autenticacion.Command.IniciarSesion;
 using Tesis2025.Application.Autenticacion.Command.Registrar;
 using Tesis2025.Application.Common.Interface;
@@ -17,13 +18,13 @@ namespace Tesis2025.Persistence.Repository
     public class AutenticacionRepository : IAutenticacionRepository
     {
         private readonly IDataBase _dataBase;
-        private readonly ICryptography cryptography;
+        private readonly ICryptography _cryptography;
 
         public AutenticacionRepository(IServiceProvider serviceProvider, ICryptography cryptography)
         {
             var services = serviceProvider.GetServices<IDataBase>();
             _dataBase = services.First(s => s.GetType() == typeof(SqlDataBase));
-            this.cryptography = cryptography;
+            this._cryptography = cryptography;
         }
 
         public async Task<IniciarSesionCommandDTO> IniciarSesion(IniciarSesionCommand command)
@@ -33,7 +34,7 @@ namespace Tesis2025.Persistence.Repository
                 DynamicParameters parameters = new DynamicParameters();
 
                 parameters.Add("@pemail", command.Correo, DbType.String, ParameterDirection.Input);
-                parameters.Add("@pclave", this.cryptography.Encrypt(command.Clave), DbType.String, ParameterDirection.Input);
+                parameters.Add("@pclave", this._cryptography.Encrypt(command.Clave), DbType.String, ParameterDirection.Input);
 
                 using (var reader = await cnx.ExecuteReaderAsync(
                     "[dbo].[sp_IniciarSesion]",
@@ -72,7 +73,7 @@ namespace Tesis2025.Persistence.Repository
                 parameters.Add("@pdistrito", command.Distrito, DbType.String, ParameterDirection.Input);
 
                 parameters.Add("@@pcorreo", command.Correo, DbType.String, ParameterDirection.Input);
-                parameters.Add("@pclave", this.cryptography.Encrypt(command.Clave), DbType.String, ParameterDirection.Input);
+                parameters.Add("@pclave", this._cryptography.Encrypt(command.Clave), DbType.String, ParameterDirection.Input);
 
                 parameters.Add("@codigo", "", DbType.String, ParameterDirection.Output);
                 parameters.Add("@msj", "", DbType.String, ParameterDirection.Output);
@@ -85,6 +86,33 @@ namespace Tesis2025.Persistence.Repository
                 var codigo = parameters.Get<string>("codigo");
                 var mensaje = parameters.Get<string>("msj");
                 return new RegistrarCommandDTO()
+                {
+                    Codigo = codigo,
+                    Mensaje = mensaje
+                };
+            }
+        }
+
+        public async Task<ActualizarClaveCommandDTO> ActualizarClave(ActualizarClaveCommand command)
+        {
+            using (var cnx = _dataBase.GetConnection())
+            {
+                DynamicParameters parameters = new DynamicParameters();
+
+                parameters.Add("@pidUsuario", command.IdUsuario, DbType.Int32, ParameterDirection.Input);
+                parameters.Add("@pclaveNueva", this._cryptography.Encrypt(command.Clave), DbType.String, ParameterDirection.Input);
+
+                parameters.Add("@codigo", "", DbType.String, ParameterDirection.Output);
+                parameters.Add("@msj", "", DbType.String, ParameterDirection.Output);
+
+                using var reader = await cnx.ExecuteReaderAsync(
+                    "[dbo].[sp_ActualizarContrasenia]",
+                    param: parameters,
+                    commandType: CommandType.StoredProcedure);
+
+                var codigo = parameters.Get<string>("codigo");
+                var mensaje = parameters.Get<string>("msj");
+                return new ActualizarClaveCommandDTO()
                 {
                     Codigo = codigo,
                     Mensaje = mensaje

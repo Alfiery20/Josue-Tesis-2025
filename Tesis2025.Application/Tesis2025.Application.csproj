@@ -20,8 +20,4 @@
     <ProjectReference Include="..\Tesis2025.Domain\Tesis2025.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Autenticacion\Query\" />
-  </ItemGroup>
-
 </Project>

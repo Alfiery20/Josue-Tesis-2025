@@ -17,6 +17,7 @@ namespace Tesis2025.Infrastructure
             services.AddSingleton<IDateTimeService, DateTimeService>();
             services.AddSingleton<ICryptography, Cryptography>();
             services.AddSingleton<IJwtService, JwtService>();
+            services.AddSingleton<IEmailService, EmailService>();
             return services;
         }
 
