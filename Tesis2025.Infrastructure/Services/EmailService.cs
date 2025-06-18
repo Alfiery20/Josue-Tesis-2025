@@ -20,8 +20,8 @@ namespace Tesis2025.Infrastructure.Services
         {
             _smtpServer = "smtp.gmail.com";
             _port = 587;
-            _senderEmail = "rfurlong@unprg.edu.pe";
-            _password = "wcwdrpdcgkgtubgu";
+            _senderEmail = "josuedurandf@gmail.com";
+            _password = "rkigwtkkhdtzppxq";
         }
         public void EnviarCorreo(string destinatario, string asunto, string cuerpoHtml, bool esHtml = true)
         {
