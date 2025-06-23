@@ -20,6 +20,10 @@ namespace Tesis2025.Api.Controllers
         public async Task<IActionResult> RegistrarMascota(RegistrarMascotaCommand command)
         {
             var response = await Mediator.Send(command);
+            if (response.Codigo != "OK")
+            {
+                return BadRequest(response);
+            }
             return Ok(response);
         }
 
@@ -29,6 +33,10 @@ namespace Tesis2025.Api.Controllers
         public async Task<IActionResult> RegistrarMascotaPerdida(RegistrarMascotaPerdidaCommand command)
         {
             var response = await Mediator.Send(command);
+            if (response.Codigo != "OK")
+            {
+                return BadRequest(response);
+            }
             return Ok(response);
         }
 
@@ -41,6 +49,10 @@ namespace Tesis2025.Api.Controllers
             {
                 Termino = termino
             });
+            if (response.Count() == 0)
+            {
+                return BadRequest(response);
+            }
             return Ok(response);
         }
 
@@ -53,6 +65,10 @@ namespace Tesis2025.Api.Controllers
             {
                 Termino = termino
             });
+            if (response.Count() == 0)
+            {
+                return BadRequest(response);
+            }
             return Ok(response);
         }
     }

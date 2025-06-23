@@ -18,6 +18,10 @@ namespace Tesis2025.Api.Controllers
         public async Task<IActionResult> IniciarSesion(EnviarCodigoCommand command)
         {
             var response = await Mediator.Send(command);
+            if (response.Codigo != "OK")
+            {
+                return BadRequest(response);
+            }
             return Ok(response);
         }
 
@@ -27,6 +31,10 @@ namespace Tesis2025.Api.Controllers
         public async Task<IActionResult> Registrar(ValidarCodigoCommand command)
         {
             var response = await Mediator.Send(command);
+            if (response.Codigo != "OK")
+            {
+                return BadRequest(response);
+            }
             return Ok(response);
         }
     }

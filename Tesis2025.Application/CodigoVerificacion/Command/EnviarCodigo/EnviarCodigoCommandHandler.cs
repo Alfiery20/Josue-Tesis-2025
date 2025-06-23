@@ -45,8 +45,8 @@ namespace Tesis2025.Application.CodigoVerificacion.Command.EnviarCodigo
                 string html = File.ReadAllText(ruta).Replace("{{CODIGO}}", request.Codigo);
 
 
-                var correoUsuario = await this._codigoRecuperacionRepository.ObtenerCorreoUsuario(request.IdUsuario);
-                this._emailService.EnviarCorreo(correoUsuario, "Codigo de Verificacion", html, true);
+                //var correoUsuario = await this._codigoRecuperacionRepository.ObtenerCorreoUsuario(request.CorreoUsuario);
+                this._emailService.EnviarCorreo(request.CorreoUsuario, "Codigo de Verificacion", html, true);
             }
             return response;
         }

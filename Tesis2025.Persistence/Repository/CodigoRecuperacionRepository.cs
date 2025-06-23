@@ -32,7 +32,7 @@ namespace Tesis2025.Persistence.Repository
             {
                 DynamicParameters parameters = new DynamicParameters();
 
-                parameters.Add("@pidUsuario", command.IdUsuario, DbType.Int32, ParameterDirection.Input);
+                parameters.Add("@pcorreoUsuario", command.CorreoUsuario, DbType.String, ParameterDirection.Input);
                 parameters.Add("@pcodigoValidacion", command.Codigo, DbType.String, ParameterDirection.Input);
 
                 parameters.Add("@codigo", "", DbType.String, ParameterDirection.Output);
@@ -59,7 +59,7 @@ namespace Tesis2025.Persistence.Repository
             {
                 DynamicParameters parameters = new DynamicParameters();
 
-                parameters.Add("@pidUsuario", command.IdUsuario, DbType.Int32, ParameterDirection.Input);
+                parameters.Add("@pcorreoUsuario", command.CorreoUsuario, DbType.String, ParameterDirection.Input);
                 parameters.Add("@pcodigoValidacion", command.Codigo, DbType.String, ParameterDirection.Input);
 
                 parameters.Add("@codigo", "", DbType.String, ParameterDirection.Output);

@@ -9,7 +9,7 @@ namespace Tesis2025.Application.CodigoVerificacion.Command.ValidarCodigo
 {
     public class ValidarCodigoCommand : IRequest<ValidarCodigoCommandDTO>
     {
-        public int IdUsuario { get; set; }
+        public string CorreoUsuario { get; set; }
         public string Codigo { get; set; }
     }
 }

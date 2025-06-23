@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Dapper;
 using Microsoft.Extensions.DependencyInjection;
 using Tesis2025.Application.Autenticacion.Command.ActualizarClave;
+using Tesis2025.Application.Autenticacion.Command.EditarUsuario;
 using Tesis2025.Application.Autenticacion.Command.IniciarSesion;
 using Tesis2025.Application.Autenticacion.Command.Registrar;
 using Tesis2025.Application.Common.Interface;
@@ -72,7 +73,7 @@ namespace Tesis2025.Persistence.Repository
                 parameters.Add("@pdireccion", command.Direccion, DbType.String, ParameterDirection.Input);
                 parameters.Add("@pdistrito", command.Distrito, DbType.String, ParameterDirection.Input);
 
-                parameters.Add("@@pcorreo", command.Correo, DbType.String, ParameterDirection.Input);
+                parameters.Add("@pcorreo", command.Correo, DbType.String, ParameterDirection.Input);
                 parameters.Add("@pclave", this._cryptography.Encrypt(command.Clave), DbType.String, ParameterDirection.Input);
 
                 parameters.Add("@codigo", "", DbType.String, ParameterDirection.Output);
@@ -113,6 +114,39 @@ namespace Tesis2025.Persistence.Repository
                 var codigo = parameters.Get<string>("codigo");
                 var mensaje = parameters.Get<string>("msj");
                 return new ActualizarClaveCommandDTO()
+                {
+                    Codigo = codigo,
+                    Mensaje = mensaje
+                };
+            }
+        }
+
+        public async Task<EditarUsuarioCommandDTO> EditarUsuario(EditarUsuarioCommand command)
+        {
+            using (var cnx = _dataBase.GetConnection())
+            {
+                DynamicParameters parameters = new DynamicParameters();
+
+                parameters.Add("@pid", command.Id, DbType.Int32, ParameterDirection.Input);
+                parameters.Add("@pnombre", command.Nombre, DbType.String, ParameterDirection.Input);
+                parameters.Add("@papellidos", command.Apellidos, DbType.String, ParameterDirection.Input);
+                parameters.Add("@pdireccion", command.Direccion, DbType.String, ParameterDirection.Input);
+                parameters.Add("@pdistrito", command.Distrito, DbType.String, ParameterDirection.Input);
+
+                parameters.Add("@pcorreo", command.Correo, DbType.String, ParameterDirection.Input);
+                parameters.Add("@pclave", this._cryptography.Encrypt(command.Clave), DbType.String, ParameterDirection.Input);
+
+                parameters.Add("@codigo", "", DbType.String, ParameterDirection.Output);
+                parameters.Add("@msj", "", DbType.String, ParameterDirection.Output);
+
+                using var reader = await cnx.ExecuteReaderAsync(
+                    "[dbo].[sp_EditarUsuario]",
+                    param: parameters,
+                    commandType: CommandType.StoredProcedure);
+
+                var codigo = parameters.Get<string>("codigo");
+                var mensaje = parameters.Get<string>("msj");
+                return new EditarUsuarioCommandDTO()
                 {
                     Codigo = codigo,
                     Mensaje = mensaje
