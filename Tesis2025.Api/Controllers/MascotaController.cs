@@ -41,13 +41,13 @@ namespace Tesis2025.Api.Controllers
         }
 
         [HttpGet]
-        [Route("obtenerMascota/{termino?}")]
+        [Route("obtenerMascota/{idUsuario?}")]
         [ProducesResponseType(typeof(ObtenerMascotaQueryDTO), StatusCodes.Status200OK)]
-        public async Task<IActionResult> ObtenerMascota(string? termino)
+        public async Task<IActionResult> ObtenerMascota(int idUsuario)
         {
             var response = await Mediator.Send(new ObtenerMascotaQuery()
             {
-                Termino = termino
+                IdUsuario = idUsuario
             });
             if (response.Count() == 0)
             {
@@ -57,13 +57,13 @@ namespace Tesis2025.Api.Controllers
         }
 
         [HttpGet]
-        [Route("obtenerMascotaPerdida/{termino?}")]
+        [Route("obtenerMascotaPerdida/{idUsuario?}")]
         [ProducesResponseType(typeof(ObtenerMascotaQueryDTO), StatusCodes.Status200OK)]
-        public async Task<IActionResult> ObtenerMascotaPerdida(string? termino)
+        public async Task<IActionResult> ObtenerMascotaPerdida(int idUsuario)
         {
             var response = await Mediator.Send(new ObtenerMascotaPerdidaQuery()
             {
-                Termino = termino
+                IdUsuario = idUsuario
             });
             if (response.Count() == 0)
             {

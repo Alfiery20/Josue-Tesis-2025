@@ -10,6 +10,6 @@ namespace Tesis2025.Application.Mascota.Query.ObtenerMascotaPerdida
 {
     public class ObtenerMascotaPerdidaQuery : IRequest<IEnumerable<ObtenerMascotaPerdidaQueryDTO>>
     {
-        public string Termino { get; set; }
+        public int IdUsuario { get; set; }
     }
 }

@@ -9,6 +9,6 @@ namespace Tesis2025.Application.Mascota.Query.ObtenerMascota
 {
     public class ObtenerMascotaQuery : IRequest<IEnumerable<ObtenerMascotaQueryDTO>>
     {
-        public string Termino { get; set; }
+        public int IdUsuario { get; set; }
     }
 }

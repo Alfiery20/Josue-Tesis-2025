@@ -9,7 +9,7 @@ namespace Tesis2025.Application.Autenticacion.Command.ActualizarClave
 {
     public class ActualizarClaveCommand : IRequest<ActualizarClaveCommandDTO>
     {
-        public int IdUsuario { get; set; }
+        public string CorreoUsuario { get; set; }
         public string Clave { get; set; }
     }
 }

@@ -102,7 +102,7 @@ namespace Tesis2025.Persistence.Repository
             {
                 DynamicParameters parameters = new DynamicParameters();
 
-                parameters.Add("@pTermino", query.Termino, DbType.String, ParameterDirection.Input);
+                parameters.Add("@pIdUsuario", query.IdUsuario, DbType.Int32, ParameterDirection.Input);
 
                 using (var reader = await cnx.ExecuteReaderAsync(
                     "[dbo].[usp_ObtenerMascota]",
@@ -146,7 +146,7 @@ namespace Tesis2025.Persistence.Repository
             {
                 DynamicParameters parameters = new DynamicParameters();
 
-                parameters.Add("@pTermino", query.Termino, DbType.String, ParameterDirection.Input);
+                parameters.Add("@pIdUsuario", query.IdUsuario, DbType.Int32, ParameterDirection.Input);
 
                 using (var reader = await cnx.ExecuteReaderAsync(
                     "[dbo].[usp_ObtenerMascotaPerdida]",
